@@ -6,7 +6,7 @@ If there's activity or people are interested, I may consider working on this pro
 
 To get started, install the necessary packages.
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 Then edit the `.env.template` file to add your discord bot token then save as `.env`.
 
