@@ -57,7 +57,7 @@ class Colours:
 
 class Messages:
     @staticmethod
-    async def warning(ctx: Context, title = Embed, description = Embed):
+    async def warning(ctx: Context, title = None, description = None):
         embed = Embed(
             title = title,
             description = description,
@@ -66,7 +66,7 @@ class Messages:
         await ctx.send(embed = embed)
 
     @staticmethod
-    async def mistake(ctx: Context, title = Embed, description = Embed):
+    async def mistake(ctx: Context, title = None, description = None):
         embed = Embed(
             title = title,
             description = description,
@@ -75,7 +75,7 @@ class Messages:
         await ctx.send(embed = embed)
 
     @staticmethod
-    async def success(ctx: Context, title = Embed, description = Embed):
+    async def success(ctx: Context, title = None, description = None):
         embed = Embed(
             title = title,
             description = description,
@@ -84,7 +84,7 @@ class Messages:
         await ctx.send(embed = embed)
 
     @staticmethod
-    async def default(ctx: Context, title = Embed, description = Embed):
+    async def default(ctx: Context, title = None, description = None):
         embed = Embed(
             title = title,
             description = description,
