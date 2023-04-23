@@ -8,7 +8,8 @@ To get started, install the necessary packages.
 ```bash
 pip install requirements.txt
 ```
-Then edit the `.env.template` file to add your discord bot token then save as `.env`
+Then edit the `.env.template` file to add your discord bot token then save as `.env`.
+
 Run `main.py` and you're set!
 
 # About
