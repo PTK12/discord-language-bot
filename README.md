@@ -4,6 +4,13 @@ A discord bot that tests users on their language (currently Spanish - vocab list
 **NOTICE: This bot is unlikely to be updated in the future**
 If there's activity or people are interested, I may consider working on this project again.
 
+To get started, install the necessary packages.
+```bash
+pip install requirements.txt
+```
+Then edit the `.env.template` file to add your discord bot token then save as `.env`
+Run `main.py` and you're set!
+
 # About
 
 There are currently 3 commands to test yourself.
