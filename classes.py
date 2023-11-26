@@ -16,8 +16,8 @@ class ChoiceButton(Button):
         super().__init__(label = label)
 
     async def callback(self, interaction):
-        if self.view.id: 
-            if self.view.id != interaction.user.id: 
+        if self.view.id:
+            if self.view.id != interaction.user.id:
                 return 1
         self.style = discord.ButtonStyle.red
         for child in self.view.children:

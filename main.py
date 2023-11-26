@@ -24,7 +24,7 @@ async def on_ready():
     print("===========================")
     await bot.change_presence(
         activity = discord.Activity(
-            type = discord.ActivityType.listening, 
+            type = discord.ActivityType.listening,
             name = '>help'
         )
     )
@@ -55,7 +55,7 @@ async def help(ctx, command = None):
 async def ping(ctx):
     '''Shows the bot latency (ms).'''
     await ctx.send(f"pong {round(bot.latency * 1000)}ms")
-        
+
 @bot.command()
 async def test(ctx):
     '''Sends a message in different colours.'''
@@ -85,11 +85,11 @@ async def check_range(ctx, inp, start, stop):
         return inp
     except (BadArgument, ValueError) as e:
         await Messages.warning(ctx,
-            "Invalid number!", 
+            "Invalid number!",
             f"Please enter a number between {start}-{stop}."
         )
         raise e
-    
+
 @bot.command()
 async def spell(ctx: Context, topic = None, rounds = "1"):
     '''Asks you to spell things.'''
@@ -97,19 +97,19 @@ async def spell(ctx: Context, topic = None, rounds = "1"):
         rounds = await check_range(ctx, rounds, 1, 20)
     except (BadArgument, ValueError):
         return 2
-    
+
     try:
         mcq(n = rounds, name = topic)
     except (IndexError, KeyError):
         await error_list(ctx)
         return 2
-    
+
     is_answer = lambda m: m.author == ctx.message.author
 
     for _ in range(rounds):
         pub, priv = mcq(n = rounds, name = topic)
         await Messages.default(ctx, pub[0])
-        
+
         try:
             answer = (await bot.wait_for("message", check=is_answer, timeout=10))
             answer = answer.content
@@ -119,10 +119,10 @@ async def spell(ctx: Context, topic = None, rounds = "1"):
                 f"The answer was {priv}"
             )
             return 2
-        
+
         if not is_correct(answer, priv):
-            await Messages.mistake(ctx, 
-                "Wrong", 
+            await Messages.mistake(ctx,
+                "Wrong",
                 f"The correct answer is {priv}"
             )
             return 2
@@ -176,9 +176,9 @@ async def quiz(ctx, topic = None, rounds = "20"):
             f"You managed {counter - losses} out of {rounds}."
         )
         return 1
-            
+
     await Messages.success(ctx,
-        "Congratulations!", 
+        "Congratulations!",
         f"You got [{rounds - losses}/{rounds}]",
     )
 
@@ -186,11 +186,11 @@ def main():
     from dotenv import dotenv_values
 
     token = dotenv_values().get("DISCORD_TOKEN")
-    
+
     if token is None:
         print("Please supply a discord token into the .env file.")
         exit(1)
-        
+
     bot.run(token, reconnect=True)
 
 main()

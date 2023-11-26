@@ -37,7 +37,7 @@ Translate the term from English to Spanish within 10 seconds. Your next message 
 If you'd like to use a vocab list other than the one provided (e.g. French), format as a JSON file like below:
 ```py
 {
-  "Topic 1": [["French", "English"], ...],  
+  "Topic 1": [["French", "English"], ...],
   "Topic 2": [...],
   ...
 }

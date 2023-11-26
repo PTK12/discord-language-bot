@@ -35,7 +35,7 @@ def r():
     return (65 - random.randrange(1 << 64).bit_length()) * (-1) ** random.randint(1, 2)
 
 def retrieve(name: str = None):
-    if name is None: 
+    if name is None:
         data = vocaball
     elif name.isdigit():
         data = vocab[vocabtitle[int(name)]]
