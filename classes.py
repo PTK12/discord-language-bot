@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import IntEnum
 
 import discord
 from discord.embeds import Embed
@@ -50,13 +50,13 @@ class ChoiceView(View):
         await self.message.edit(view=self)
 
 
-class Colours(Enum):
-    R = 0xFF4A08
-    O = 0xFF6B21
-    Y = 0xFFF826
-    G = 0x95E600
-    B = 0x0F63FF
-    P = 0xA20DFF
+class Colours(IntEnum):
+    RED = 0xFF4A08
+    ORANGE = 0xFF6B21
+    YELLOW = 0xFFF826
+    GREEN = 0x95E600
+    BLUE = 0x0F63FF
+    PURPLE = 0xA20DFF
 
 
 class Messages:
@@ -65,7 +65,7 @@ class Messages:
         embed = Embed(
             title=title,
             description=description,
-            color=Colours.R.value
+            color=Colours.RED
         )
         await ctx.send(embed=embed)
 
@@ -74,7 +74,7 @@ class Messages:
         embed = Embed(
             title=title,
             description=description,
-            color=Colours.O.value
+            color=Colours.ORANGE
         )
         await ctx.send(embed=embed)
 
@@ -83,7 +83,7 @@ class Messages:
         embed = Embed(
             title=title,
             description=description,
-            color=Colours.G.value
+            color=Colours.GREEN
         )
         await ctx.send(embed=embed)
 
@@ -92,6 +92,6 @@ class Messages:
         embed = Embed(
             title=title,
             description=description,
-            color=Colours.B.value
+            color=Colours.BLUE
         )
         await ctx.send(embed=embed)
