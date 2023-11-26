@@ -1,5 +1,4 @@
 from asyncio import sleep
-import asyncio
 
 import discord
 from discord.ext import commands
@@ -122,7 +121,7 @@ async def spell(ctx: Context, topic=None, rounds="1"):
         try:
             answer = await bot.wait_for("message", check=is_answer, timeout=10)
             answer = answer.content
-        except asyncio.TimeoutError:
+        except TimeoutError:
             await Messages.mistake(
                 ctx,
                 "You ran out of time!",

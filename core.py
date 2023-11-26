@@ -1,4 +1,4 @@
-import random
+from random import randrange, randint, choice
 from database import *
 
 __all__ = ["mcq", "is_correct"]
@@ -33,7 +33,7 @@ ACCENTS = {
 
 def r():
     '''Randomly generate numbers based on exponential distribution.'''
-    return (65 - random.randrange(1 << 64).bit_length()) * (-1) ** random.randint(1, 2)
+    return (65 - randrange(1 << 64).bit_length()) * (-1) ** randint(1, 2)
 
 
 def retrieve(name: str = None):
@@ -49,7 +49,7 @@ def retrieve(name: str = None):
 def mcq(n: int = 4, reverse: bool = False, name=None):
     '''multiple choice question'''
     data = retrieve(name)
-    mid = random.randint(0, len(data) - 1)
+    mid = randint(0, len(data) - 1)
     picks = set()
     while len(picks) != n:
         mid = (mid + r()) % len(data)
@@ -58,7 +58,7 @@ def mcq(n: int = 4, reverse: bool = False, name=None):
     pairs = [data[i] for i in picks]
     if reverse:
         pairs = [i[::-1] for i in pairs]
-    correct = random.choice(pairs)
+    correct = choice(pairs)
     public = (correct[1], [i[0] for i in pairs])
     private = correct[0]
     return public, private
