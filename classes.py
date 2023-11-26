@@ -1,3 +1,5 @@
+from enum import Enum
+
 import discord
 from discord.embeds import Embed
 from discord.ext.commands.context import Context
@@ -45,7 +47,7 @@ class ChoiceView(View):
             self.stop()
         await self.message.edit(view=self)
 
-class Colours:
+class Colours(Enum):
     R = 0xFF4A08
     O = 0xFF6B21
     Y = 0xFFF826
@@ -53,15 +55,13 @@ class Colours:
     B = 0x0F63FF
     P = 0xA20DFF
 
-    ALL = (R, O, Y, G, B, P)
-
 class Messages:
     @staticmethod
     async def warning(ctx: Context, title = None, description = None):
         embed = Embed(
             title = title,
             description = description,
-            color = Colours.R
+            color = Colours.R.value
         )
         await ctx.send(embed = embed)
 
@@ -70,7 +70,7 @@ class Messages:
         embed = Embed(
             title = title,
             description = description,
-            color = Colours.O
+            color = Colours.O.value
         )
         await ctx.send(embed = embed)
 
@@ -79,7 +79,7 @@ class Messages:
         embed = Embed(
             title = title,
             description = description,
-            color = Colours.G
+            color = Colours.G.value
         )
         await ctx.send(embed = embed)
 
@@ -88,6 +88,6 @@ class Messages:
         embed = Embed(
             title = title,
             description = description,
-            color = Colours.B
+            color = Colours.B.value
         )
         await ctx.send(embed = embed)

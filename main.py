@@ -59,10 +59,9 @@ async def ping(ctx):
 @bot.command()
 async def test(ctx):
     '''Sends a message in different colours.'''
-    return
-    for i in Colours.ALL:
-        await ctx.send(embed = Embed(title="Hi", color=i))
-        await sleep(1)
+    for colour in Colours:
+        await ctx.send(embed = Embed(title="Hi", color=colour.value))
+        await sleep(0.2)
 
 @bot.command()
 async def topic(ctx):
@@ -139,7 +138,7 @@ async def q(ctx, topic = None):
         await error_list(ctx)
         return 2
 
-    embed = Embed(title = pub[0], color = Colours.B)
+    embed = Embed(title = pub[0], color = Colours.B.value)
     view = ChoiceView(pub[1], priv, ctx.message.author.id)
     view.message = await ctx.send(embed = embed, view = view)
     return await view.wait()
@@ -163,7 +162,7 @@ async def quiz(ctx, topic = None, rounds = "20"):
     for counter in range(1, rounds + 1):
         pub, priv = mcq(name = topic)
 
-        embed = Embed(title = f"{pub[0]} [{counter}/{rounds}]", color = Colours.B)
+        embed = Embed(title = f"{pub[0]} [{counter}/{rounds}]", color = Colours.B.value)
         view = ChoiceView(pub[1], priv, ctx.message.author.id)
         view.message = await ctx.send(embed = embed, view = view)
         await view.wait()
