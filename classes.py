@@ -10,10 +10,11 @@ __all__ = [
     "Colours", "Messages"
 ]
 
+
 class ChoiceButton(Button):
-    def __init__(self, label, correct = False):
+    def __init__(self, label, correct=False):
         self.correct = correct
-        super().__init__(label = label)
+        super().__init__(label=label)
 
     async def callback(self, interaction):
         if self.view.id:
@@ -31,8 +32,9 @@ class ChoiceButton(Button):
             self.view.stop()
         await interaction.response.edit_message(view=self.view)
 
+
 class ChoiceView(View):
-    def __init__(self, items, correct_label, user_id = None):
+    def __init__(self, items, correct_label, user_id=None):
         super().__init__(timeout=5)
         self.success = False
         self.id = user_id
@@ -47,6 +49,7 @@ class ChoiceView(View):
             self.stop()
         await self.message.edit(view=self)
 
+
 class Colours(Enum):
     R = 0xFF4A08
     O = 0xFF6B21
@@ -55,39 +58,40 @@ class Colours(Enum):
     B = 0x0F63FF
     P = 0xA20DFF
 
+
 class Messages:
     @staticmethod
-    async def warning(ctx: Context, title = None, description = None):
+    async def warning(ctx: Context, title=None, description=None):
         embed = Embed(
-            title = title,
-            description = description,
-            color = Colours.R.value
+            title=title,
+            description=description,
+            color=Colours.R.value
         )
-        await ctx.send(embed = embed)
+        await ctx.send(embed=embed)
 
     @staticmethod
-    async def mistake(ctx: Context, title = None, description = None):
+    async def mistake(ctx: Context, title=None, description=None):
         embed = Embed(
-            title = title,
-            description = description,
-            color = Colours.O.value
+            title=title,
+            description=description,
+            color=Colours.O.value
         )
-        await ctx.send(embed = embed)
+        await ctx.send(embed=embed)
 
     @staticmethod
-    async def success(ctx: Context, title = None, description = None):
+    async def success(ctx: Context, title=None, description=None):
         embed = Embed(
-            title = title,
-            description = description,
-            color = Colours.G.value
+            title=title,
+            description=description,
+            color=Colours.G.value
         )
-        await ctx.send(embed = embed)
+        await ctx.send(embed=embed)
 
     @staticmethod
-    async def default(ctx: Context, title = None, description = None):
+    async def default(ctx: Context, title=None, description=None):
         embed = Embed(
-            title = title,
-            description = description,
-            color = Colours.B.value
+            title=title,
+            description=description,
+            color=Colours.B.value
         )
-        await ctx.send(embed = embed)
+        await ctx.send(embed=embed)
