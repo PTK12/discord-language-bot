@@ -31,12 +31,12 @@ ACCENTS = {
 }
 
 
-def r():
+def r() -> int:
     '''Randomly generate numbers based on exponential distribution.'''
     return (65 - randrange(1 << 64).bit_length()) * (-1) ** randint(1, 2)
 
 
-def retrieve(name: str = None):
+def retrieve(name: str | None = None) -> list[list[str]]:
     if name is None:
         data = vocaball
     elif name.isdigit():
@@ -46,11 +46,11 @@ def retrieve(name: str = None):
     return data
 
 
-def mcq(n: int = 4, reverse: bool = False, name=None):
+def mcq(n: int = 4, reverse: bool = False, name: str | None = None):
     '''multiple choice question'''
     data = retrieve(name)
     mid = randint(0, len(data) - 1)
-    picks = set()
+    picks: set[int] = set()
     while len(picks) != n:
         mid = (mid + r()) % len(data)
         picks.add(mid)
@@ -64,11 +64,11 @@ def mcq(n: int = 4, reverse: bool = False, name=None):
     return public, private
 
 
-def clean(inp: str):
+def clean(inp: str) -> str:
     return "".join(i.lower() for i in inp if i.isalpha())
 
 
-def is_correct(inp, correct):
+def is_correct(inp: str, correct: str) -> bool:
     inp = clean(inp)
     correct = clean(correct)
 

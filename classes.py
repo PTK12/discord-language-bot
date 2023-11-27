@@ -4,6 +4,7 @@ import discord
 from discord.embeds import Embed
 from discord.ext.commands.context import Context
 from discord.ui import Button, View
+from discord import Interaction
 
 __all__ = [
     "ChoiceButton", "ChoiceView",
@@ -12,11 +13,11 @@ __all__ = [
 
 
 class ChoiceButton(Button):
-    def __init__(self, label, correct=False):
+    def __init__(self, label: str | None, correct: bool = False) -> None:
         self.correct = correct
         super().__init__(label=label)
 
-    async def callback(self, interaction):
+    async def callback(self, interaction: Interaction) -> None:
         if self.view.id:
             if self.view.id != interaction.user.id:
                 return 1
@@ -34,14 +35,20 @@ class ChoiceButton(Button):
 
 
 class ChoiceView(View):
-    def __init__(self, items, correct_label, user_id=None):
+    def __init__(
+        self,
+        items: list[str],
+        correct_item: str,
+        user_id: int
+    ) -> None:
+
         super().__init__(timeout=5)
         self.success = False
         self.id = user_id
-        for i in items:
-            self.add_item(ChoiceButton(i, i == correct_label))
+        for item in items:
+            self.add_item(ChoiceButton(item, item == correct_item))
 
-    async def on_timeout(self):
+    async def on_timeout(self) -> None:
         for child in self.children:
             child.disabled = True
             if child.correct:

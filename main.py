@@ -17,7 +17,7 @@ bot = commands.Bot(command_prefix=">", help_command=None, intents=intents)
 
 
 @bot.event
-async def on_ready():
+async def on_ready() -> None:
     print("===========================")
     print("Username:", bot.user)
     print("ID:", bot.user.id)
@@ -43,7 +43,7 @@ Use **help** [command] for more information about a command.
 
 
 @bot.command()
-async def help(ctx, command=None):
+async def help(ctx: Context, command: str | None = None) -> None:
     '''I think you know what this does'''
     if command is None:
         await Messages.default(ctx, "Help", HELP_DESC)
@@ -54,13 +54,13 @@ async def help(ctx, command=None):
 
 
 @bot.command()
-async def ping(ctx):
+async def ping(ctx: Context) -> None:
     '''Shows the bot latency (ms).'''
     await ctx.send(f"pong {round(bot.latency * 1000)}ms")
 
 
 @bot.command()
-async def test(ctx):
+async def test(ctx: Context) -> None:
     '''Sends a message in different colours.'''
     for colour in Colours:
         await ctx.send(embed=Embed(title="Hi", color=colour))
@@ -68,7 +68,7 @@ async def test(ctx):
 
 
 @bot.command()
-async def topic(ctx):
+async def topic(ctx: Context) -> None:
     '''Shows all the available topics.'''
     desc = []
     for i, j in enumerate(vocabtitle):
@@ -76,14 +76,14 @@ async def topic(ctx):
     await Messages.default(ctx, "Topics", "\n".join(desc))
 
 
-async def error_list(ctx):
+async def error_list(ctx: Context) -> None:
     desc = ["Try using one of these instead:"]
     for i, j in enumerate(vocabtitle):
         desc.append(f"**{i:>3}**\t{j}")
     await Messages.warning(ctx, "Invalid topic!", "\n".join(desc))
 
 
-async def check_range(ctx, inp, start, stop):
+async def check_range(ctx: Context, inp: str, start: int, stop: int) -> int:
     try:
         inp = int(inp)
         if inp not in range(start, stop + 1):
@@ -99,8 +99,13 @@ async def check_range(ctx, inp, start, stop):
 
 
 @bot.command()
-async def spell(ctx: Context, topic=None, rounds="1"):
+async def spell(
+    ctx: Context,
+    topic: str | None = None,
+    rounds: str = "1"
+) -> None:
     '''Asks you to spell things.'''
+
     try:  # Check if number of rounds is correct
         rounds = await check_range(ctx, rounds, 1, 20)
     except (BadArgument, ValueError):
@@ -141,7 +146,7 @@ async def spell(ctx: Context, topic=None, rounds="1"):
 
 
 @bot.command()
-async def q(ctx, topic=None):
+async def q(ctx: Context, topic: str | None = None) -> None:
     '''Sends a multiple choice question.'''
     try:  # Check if title is correct
         pub, priv = mcq(name=topic)
@@ -156,8 +161,13 @@ async def q(ctx, topic=None):
 
 
 @bot.command()
-async def quiz(ctx, topic=None, rounds="20"):
+async def quiz(
+    ctx: Context,
+    topic: str | None = None,
+    rounds: str = "20"
+) -> None:
     '''Sends multiple multiple choice questions.'''
+
     try:  # Check if number of rounds is correct
         rounds = await check_range(ctx, rounds, 3, 50)
     except (BadArgument, ValueError):
@@ -201,7 +211,7 @@ async def quiz(ctx, topic=None, rounds="20"):
     )
 
 
-def main():
+def main() -> None:
     from dotenv import dotenv_values
 
     token = dotenv_values().get("DISCORD_TOKEN")
