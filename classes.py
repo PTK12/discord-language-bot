@@ -20,7 +20,8 @@ class ChoiceButton(Button):
     async def callback(self, interaction: Interaction) -> None:
         if self.view.id:
             if self.view.id != interaction.user.id:
-                return 1
+                return
+
         self.style = discord.ButtonStyle.red
         for child in self.view.children:
             child.disabled = True

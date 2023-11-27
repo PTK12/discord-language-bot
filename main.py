@@ -109,13 +109,13 @@ async def spell(
     try:  # Check if number of rounds is correct
         rounds = await check_range(ctx, rounds, 1, 20)
     except (BadArgument, ValueError):
-        return 2
+        return
 
     try:
         mcq(n=rounds, name=topic)
     except (IndexError, KeyError):
         await error_list(ctx)
-        return 2
+        return
 
     is_answer = lambda m: m.author == ctx.message.author
 
@@ -132,7 +132,7 @@ async def spell(
                 "You ran out of time!",
                 f"The answer was {priv}"
             )
-            return 2
+            return
 
         if not is_correct(answer, priv):
             await Messages.mistake(
@@ -140,7 +140,7 @@ async def spell(
                 "Wrong",
                 f"The correct answer is {priv}"
             )
-            return 2
+            return
 
         await Messages.success(ctx, "Correct!")
 
@@ -152,12 +152,12 @@ async def q(ctx: Context, topic: str | None = None) -> None:
         pub, priv = mcq(name=topic)
     except (IndexError, KeyError):
         await error_list(ctx)
-        return 2
+        return
 
     embed = Embed(title=pub[0], color=Colours.BLUE)
     view = ChoiceView(pub[1], priv, ctx.message.author.id)
     view.message = await ctx.send(embed=embed, view=view)
-    return await view.wait()
+    await view.wait()
 
 
 @bot.command()
@@ -171,13 +171,13 @@ async def quiz(
     try:  # Check if number of rounds is correct
         rounds = await check_range(ctx, rounds, 3, 50)
     except (BadArgument, ValueError):
-        return 2
+        return
 
     try:  # Check if title is correct
         mcq(name=topic)
     except (IndexError, KeyError):
         await error_list(ctx)
-        return 2
+        return
 
     losses = 0
 
@@ -202,7 +202,7 @@ async def quiz(
             "You lost 3 times.",
             f"You managed {counter - losses} out of {rounds}."
         )
-        return 1
+        return
 
     await Messages.success(
         ctx,
