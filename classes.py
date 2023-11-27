@@ -66,39 +66,25 @@ class Colours(IntEnum):
     PURPLE = 0xA20DFF
 
 
+def create_message_sender(colour: int):
+    @staticmethod
+    async def message_sender(
+        ctx: Context,
+        title: str | None = None,
+        description: str | None = None
+    ) -> None:
+
+        embed = Embed(
+            title=title,
+            description=description,
+            colour=colour
+        )
+        await ctx.send(embed=embed)
+    return message_sender
+
+
 class Messages:
-    @staticmethod
-    async def warning(ctx: Context, title=None, description=None):
-        embed = Embed(
-            title=title,
-            description=description,
-            color=Colours.RED
-        )
-        await ctx.send(embed=embed)
-
-    @staticmethod
-    async def mistake(ctx: Context, title=None, description=None):
-        embed = Embed(
-            title=title,
-            description=description,
-            color=Colours.ORANGE
-        )
-        await ctx.send(embed=embed)
-
-    @staticmethod
-    async def success(ctx: Context, title=None, description=None):
-        embed = Embed(
-            title=title,
-            description=description,
-            color=Colours.GREEN
-        )
-        await ctx.send(embed=embed)
-
-    @staticmethod
-    async def default(ctx: Context, title=None, description=None):
-        embed = Embed(
-            title=title,
-            description=description,
-            color=Colours.BLUE
-        )
-        await ctx.send(embed=embed)
+    warning = create_message_sender(Colours.RED)
+    mistake = create_message_sender(Colours.ORANGE)
+    success = create_message_sender(Colours.GREEN)
+    default = create_message_sender(Colours.BLUE)
