@@ -18,20 +18,19 @@ class ChoiceButton(Button):
         super().__init__(label=label)
 
     async def callback(self, interaction: Interaction) -> None:
-        if self.view.id:
-            if self.view.id != interaction.user.id:
-                return
+        if self.view.id != interaction.user.id: return
 
-        self.style = discord.ButtonStyle.red
+        self.style = discord.ButtonStyle.green if self.correct \
+            else discord.ButtonStyle.red
+
+        self.view.success = self.correct
+
         for child in self.view.children:
             child.disabled = True
-            if child.correct:
-                if self == child:
-                    child.style = discord.ButtonStyle.green
-                    self.view.success = True
-                else:
-                    child.style = discord.ButtonStyle.blurple
-            self.view.stop()
+            if child.correct and child != self:
+                child.style = discord.ButtonStyle.blurple
+
+        self.view.stop()
         await interaction.response.edit_message(view=self.view)
 
 
@@ -54,7 +53,8 @@ class ChoiceView(View):
             child.disabled = True
             if child.correct:
                 child.style = discord.ButtonStyle.blurple
-            self.stop()
+
+        self.stop()
         await self.message.edit(view=self)
 
 

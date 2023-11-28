@@ -83,19 +83,19 @@ async def error_list(ctx: Context) -> None:
     await Messages.warning(ctx, "Invalid topic!", "\n".join(desc))
 
 
-async def check_range(ctx: Context, inp: str, start: int, stop: int) -> int:
-    try:
-        inp = int(inp)
-        if inp not in range(start, stop + 1):
-            raise BadArgument
-        return inp
-    except (BadArgument, ValueError) as e:
-        await Messages.warning(
-            ctx,
-            "Invalid number!",
-            f"Please enter a number between {start}-{stop}."
-        )
-        raise e
+def check_range(inp: str, start: int, stop: int) -> int:
+    inp = int(inp)
+    if inp not in range(start, stop + 1):
+        raise BadArgument
+    return inp
+
+
+async def error_range(ctx: Context, start: int, stop: int) -> None:
+    await Messages.warning(
+        ctx,
+        "Invalid number!",
+        f"Please enter a number between {start}-{stop}."
+    )
 
 
 @bot.command()
@@ -107,8 +107,9 @@ async def spell(
     '''Asks you to spell things.'''
 
     try:  # Check if number of rounds is correct
-        rounds = await check_range(ctx, rounds, 1, 20)
+        rounds = check_range(rounds, 1, 20)
     except (BadArgument, ValueError):
+        await error_range(ctx, 1, 20)
         return
 
     try:
@@ -169,8 +170,9 @@ async def quiz(
     '''Sends multiple multiple choice questions.'''
 
     try:  # Check if number of rounds is correct
-        rounds = await check_range(ctx, rounds, 3, 50)
+        rounds = check_range(rounds, 3, 50)
     except (BadArgument, ValueError):
+        await error_range(ctx, 3, 50)
         return
 
     try:  # Check if title is correct

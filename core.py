@@ -38,26 +38,26 @@ def r() -> int:
 
 def retrieve(name: str | None = None) -> list[list[str]]:
     if name is None:
-        data = vocaball
+        return vocaball
     elif name.isdigit():
-        data = vocab[vocabtitle[int(name)]]
-    elif isinstance(name, str):
-        data = vocab[name]
-    return data
+        return vocab[vocabtitle[int(name)]]
+    else:
+        return vocab[name]
 
 
-def mcq(n: int = 4, reverse: bool = False, name: str | None = None):
+def mcq(n: int = 4, name: str | None = None, reverse: bool = False):
     '''multiple choice question'''
     data = retrieve(name)
     mid = randint(0, len(data) - 1)
     picks: set[int] = set()
-    while len(picks) != n:
+    while len(picks) < n:
         mid = (mid + r()) % len(data)
         picks.add(mid)
 
     pairs = [data[i] for i in picks]
     if reverse:
         pairs = [i[::-1] for i in pairs]
+
     correct = choice(pairs)
     public = (correct[1], [i[0] for i in pairs])
     private = correct[0]
@@ -72,9 +72,5 @@ def is_correct(inp: str, correct: str) -> bool:
     inp = clean(inp)
     correct = clean(correct)
 
-    if inp == correct:
-        return True
-    correct = correct.translate(ACCENTS)
-    if inp == correct:
-        return True
-    return False
+    if inp == correct: return True
+    return inp == correct.translate(ACCENTS)
